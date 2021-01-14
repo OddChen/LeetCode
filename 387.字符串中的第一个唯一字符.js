@@ -16,7 +16,7 @@ var firstUniqChar = function(s) {
   }
   // console.log(p)
   let arr = Array.from(p.values());
-  console.log(arr);
+  // console.log(arr);
   for(let i=0; i<arr.length; i++){
       if(arr[i]!==-1){
           return arr[i];
