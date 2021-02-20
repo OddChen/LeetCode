@@ -1,3 +1,4 @@
+//基于数组
 function Stack() {
   //属性
   this.items = []
