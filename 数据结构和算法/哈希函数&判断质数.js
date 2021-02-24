@@ -11,3 +11,14 @@ const hashFunc = (str, size) => {
   let index = hashCode % size
   return index
 }
+
+//质数
+const isPrime = (num) => {
+  let temp = parseInt(Math.sqrt(num))
+  for (let i = 2; i <= temp; i++) {
+    if (num % i === 0) {
+      return false
+    }
+  }
+  return true
+}

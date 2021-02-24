@@ -40,6 +40,12 @@ class HashTable {
     }
     bucket.push([key, value])
     this.count += 1
+    //判断是否需要扩容
+    if (this.count / this.limit > 0.75) {
+      let newSize = this.limit * 2
+      let newPrime = this.getPrime(newSize)
+      this.resize(newPrime)
+    }
   }
   //2.获取
   get = (key) => {
@@ -68,6 +74,13 @@ class HashTable {
       if (tuple[0] === key) {
         bucket.splice(i, 1)
         this.count -= 1
+        //判断是否需要缩小容量
+        if (this.limit > 7 && this.count / this.limit < 0.25) {
+          //保证容量始终为质数
+          let newSize = Math.floor(this.limit / 2)
+          let newPrime = this.getPrime(newSize)
+          this.resize(newPrime)
+        }
         return tuple[1]
       }
     }
@@ -83,5 +96,45 @@ class HashTable {
   //5.size
   size = () => {
     return this.count
+  }
+
+  //扩容
+  resize = (newlimit) => {
+    let oldStorage = this.storage
+    //重置所有属性
+    this.storage = []
+    this.count = 0
+    this.limit = newlimit
+
+    //遍历
+    for (let i = 0; i < oldStorage.length; i++) {
+      let bucket = oldStorage[i]
+      if (bucket === undefined) {
+        continue
+      }
+      //重新插入
+      for (let i = 0; i < bucket.length; i++) {
+        let purple = bucket[i]
+        this.put(purple[0], purple[1])
+      }
+    }
+  }
+
+  //判断质数
+  isPrime = (num) => {
+    let temp = parseInt(Math.sqrt(num))
+    for (let i = 2; i <= temp; i++) {
+      if (num % i === 0) {
+        return false
+      }
+    }
+    return true
+  }
+  //获取质数
+  getPrime = (num) => {
+    if (this.isPrime(num)) {
+      num += 1
+    }
+    return num
   }
 }
