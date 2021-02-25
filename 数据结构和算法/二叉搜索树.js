@@ -120,4 +120,85 @@ class BinarySearchTree {
     }
     return false
   }
+
+  /*
+    删除：
+    1、删除叶子节点 
+    2、删除只有一个子节点的节点
+    3、删除有两个子节点的节点
+  */
+  remove = (key) => {
+  //寻找要删除的节点
+    let current = this.root
+    let parent = null
+    let isleftChild = true
+    while (current.key !== key) {
+      parent = current
+      if (key < current.key) {
+        isleftChild = true
+        current = current.left
+      } else {
+        isleftChild = false
+        current = current.right
+      }
+      if (current === null) {
+        return false
+      }
+    }
+    //删除节点
+    //删除叶子节点
+    if (current.left === null && current.right === null) {
+      if (current === this.root) {
+        this.root = null
+      } else if (isleftChild) {
+        parent.left = null
+      } else {
+        parent.right = null
+      }
+    } else if (current.right === null) { //删除只有一个子节点的节点
+        if (current === this.root) {
+          this.root = current.left
+        } else if (isleftChild) {
+          parent.left = current.left
+        } else {
+          parent.right = current.left
+        }
+    } else if (current.left === null) {
+        if (current === this.root) {
+          this.root = current.right
+        } else if (isleftChild) {
+          parent.left = current.right
+        } else {
+          parent.right = current.right
+        }
+    } else { //删除有两个节点的节点 用前驱或者后继来替换
+      let successor = this.getSuccssor(current)
+      if (current === this.root) {
+        this.root = successor
+      } else if (isleftChild) {
+        parent.left = successor
+      } else {
+        parent.right = successor
+      }
+      successor.left = current.left
+    }
+  }
+  //找后继节点
+  getSuccssor = (delNode) => {
+    let successor = delNode
+    let current = delNode.right
+    let successorParent = delNode
+    //循环查找
+    while (current !== null) {
+      successorParent = successor
+      successor = current
+      current = current.left
+    }
+    //判断寻找的后继节点是否是delNode的right节点
+    if (successor !== delNode.right) {
+      successorParent.left = successor.right
+      successor.right = delNode.right
+    }
+    return successor
+  }
 }
