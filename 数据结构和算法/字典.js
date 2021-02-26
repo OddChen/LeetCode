@@ -1,4 +1,4 @@
-class Dcitionary {
+class Dictionary {
   constructor() {
     this.items = {}
   }
