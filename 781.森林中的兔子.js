@@ -43,3 +43,18 @@ var numRabbits = function (answers) {
   }
   return ans
 }
+
+//评论里看到个有意思的解法
+var numRabbits = function (answers) {
+  let arr = new Array(1000).fill(0)
+  let result = 0
+  for (const values of answers) {
+    if (arr[values] === 0) {
+      //console.log(values)
+      arr[values] = values + 1
+      result += values + 1
+    }
+    arr[values]--
+  }
+  return result
+}
