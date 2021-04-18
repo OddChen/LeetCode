@@ -33,3 +33,18 @@ var removeDuplicates = function (nums) {
   }
   return nums.length
 }
+//优化了一下，仅在左右指针不重复的情况下复制值
+var removeDuplicates = function (nums) {
+  let left = 0
+  let right = 1
+  while (right < nums.length) {
+    if (nums[left] !== nums[right]) {
+      left++
+      if (left !== right) {
+        nums[left] = nums[right]
+      }
+    }
+    right++
+  }
+  return left + 1
+}
