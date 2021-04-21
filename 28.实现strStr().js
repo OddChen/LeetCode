@@ -21,3 +21,11 @@ var strStr = function (haystack, needle) {
   }
   return -1
 }
+
+//运行时间还挺短......
+var strStr = function (haystack, needle) {
+  if (needle.length === 0) {
+    return 0
+  }
+  return haystack.indexOf(needle)
+}
