@@ -8,12 +8,12 @@
  * @param {number} n
  * @return {number}
  */
-var fib = function(n) {
-  while(n>1){
-      return fib(n-1) + fib(n-2);
+var fib = function (n) {
+  while (n > 1) {
+    return fib(n - 1) + fib(n - 2)
   }
-  return n;
-};
+  return n
+}
 //迭代
 // var fib = function(n) {
 //   if (n < 2) {
@@ -27,3 +27,18 @@ var fib = function(n) {
 //   }
 //   return r;
 // };
+
+//动态规划的思路
+var fib = function (n) {
+  if (n === 0 || n === 1) {
+    return n
+  }
+  let pre = 0
+  let cur = 1
+  for (let i = 2; i <= n; i++) {
+    const sum = pre + cur
+    pre = cur
+    cur = sum
+  }
+  return cur
+}
