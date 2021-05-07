@@ -6,18 +6,17 @@
  * @param {number} start
  * @return {number}
  */
-var xorOperation = function(n, start) {
-    let nums = [];
-    for (let i=0; i<n; i++){
-        nums[i] = start + 2*i;
-    }
-    return nums.reduce((x,y)=>{
-        return x^y;
-    })
-    // let result = 0;
-    // for(let i = 0; i < n ; i++){
-    //     result^= start + 2*i;
-    // }
-    // return result;
-
-};
+var xorOperation = function (n, start) {
+  let nums = []
+  for (let i = 0; i < n; i++) {
+    nums[i] = start + 2 * i
+  }
+  return nums.reduce((x, y) => {
+    return x ^ y
+  })
+  // let result = 0;
+  // for(let i = 0; i < n ; i++){
+  //     result^= start + 2*i;
+  // }
+  // return result;
+}
