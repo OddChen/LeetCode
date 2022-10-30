@@ -17,7 +17,7 @@ function ArrayList() {
    * 简单排序算法、从小到大
    */
 
-  //冒泡排序
+  //冒泡排序 O(n^2) 稳定
   ArrayList.prototype.bubbleSort = () => {
     let length = this.array.length
 
@@ -30,14 +30,15 @@ function ArrayList() {
       }
     }
   }
-  //选择排序
+
+  //选择排序 O(n^2) 不稳定
   ArrayList.prototype.selectionSort = () => {
     let length = this.array.length
 
     for (let i = 0; i < length - 1; i++) {
       let min = i
       //每次循环选出最小值和第i个位置的交换
-      for (let j = min - 1; j >= 0; j--) {
+      for (let j = length - 1; j >= 0; j--) {
         if (this.array[min] > this.array[j]) {
           min = j
         }
@@ -45,7 +46,8 @@ function ArrayList() {
       this.swap(i, min)
     }
   }
-  //插入排序
+
+  //插入排序 O(n^2) 稳定
   ArrayList.prototype.insertionSort = () => {
     let length = this.array.length
 
@@ -64,7 +66,8 @@ function ArrayList() {
   /**
    * 高级排序
    */
-  //希尔排序
+
+  //希尔排序 O(nlogn) 不稳定
   ArrayList.prototype.shellSort = () => {
     let length = this.array.length
     //设置增量
@@ -86,7 +89,8 @@ function ArrayList() {
       k = Math.floor(k / 2)
     }
   }
-  //快速排序
+
+  //快速排序 O(nlogn) 不稳定
   //枢纽选择：取左中右的中位数
   ArrayList.prototype.median = (left, right) => {
     let center = Math.floor((left, right) / 2)
@@ -105,16 +109,11 @@ function ArrayList() {
 
     return this.array[right - 1]
   }
-  ArrayList.prototype.quickSort = () => {
-    this.quickSortRec(0, this.array.length - 1)
-  }
   ArrayList.prototype.quickSortRec = (left, right) => {
     if (left >= right) {
       return
     }
-
     let pivot = this.median(left, right)
-
     let i = left
     let j = right - 1
     while (true) {
@@ -130,10 +129,61 @@ function ArrayList() {
         break
       }
     }
-
     this.swap(i, right - 1)
-
     this.quickSortRec(left, i - 1)
     this.quickSortRec(i + 1, right)
+  }
+  ArrayList.prototype.quickSort = () => {
+    this.quickSortRec(0, this.array.length - 1)
+  }
+
+  //另一种快排
+  // let quickSorttwo = function (arr) {
+  //   if (arr.length <= 1) {
+  //     return arr
+  //   }
+
+  //   let pivotIndex = Math.floor(arr.length / 2)
+  //   let pivot = arr.splice(pivotIndex, 1)[0]
+  //   let left = []
+  //   let right = []
+
+  //   for (let i = 0; i < arr.length; i++) {
+  //     if (arr[i] < pivot) {
+  //       left.push(arr[i])
+  //     } else {
+  //       right.push(arr[i]);
+  //     }
+  //   }
+
+  //   return quickSorttwo(left).concat([pivot], quickSorttwo(right))
+  // }
+
+  //归并排序 O(nlogn)
+  ArrayList.prototype.MergeSort = () => {
+    let length = this.array.length
+    const mid = Math.floor(length / 2)
+    const front = this.array.slice(0, mid)
+    const end = this.array.slice(mid)
+    return merge(MergeSort(front), MergeSort(end))
+  }
+  ArrayList.prototype.merge = (front, end) => {
+    const temp = []
+    while (front.length && end.length) {
+      if (front[0] < end[0]) {
+        temp.push(front.shift())
+      } else {
+        temp.push(end.shift())
+      }
+    }
+
+    while (front.length) {
+      temp.push(front.shift())
+    }
+    while (end.length) {
+      temp.push(end.shift())
+    }
+
+    return temp
   }
 }
